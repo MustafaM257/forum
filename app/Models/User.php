@@ -42,6 +42,12 @@ class User extends Authenticatable
         'two_factor_secret',
     ];
 
+    protected $visible = [
+        'id',
+        'name',
+        'email',
+        'updated_at'
+    ];
     /**
      * The accessors to append to the model's array form.
      *

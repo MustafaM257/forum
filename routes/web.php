@@ -26,7 +26,11 @@ Route::middleware([
 
 Route::get('posts', [PostController::class, 'index'])->name('posts.index');
 
-
-Route::get('test',function(){
-   return \App\Http\Resources\UserResource::make(User::find(11));
-});
+//
+//Route::get('test',function(){
+//    return [
+//        \App\Http\Resources\UserResource::make(User::find(1)),
+//        \App\Http\Resources\PostResource::make(\App\Models\Post::find(1)),
+//        \App\Http\Resources\CommentResource::make(\App\Models\Comment::find(1)),
+//    ];
+//});

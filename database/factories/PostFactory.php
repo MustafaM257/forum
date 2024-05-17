@@ -21,7 +21,7 @@ class PostFactory extends Factory
             //
             'user_id' => User::factory(),
             'title' => fake()->sentence(10),
-            'body' => fake()->realText(500),
+            'body' => implode("\n\n", fake()->paragraphs(mt_rand(3, 4))),
 
         ];
     }

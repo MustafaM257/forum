@@ -2,7 +2,7 @@
     <AppLayout>
 <Container>
         <ul class="space-y-4">
-            <li v-for="post in posts">
+            <li v-for="post in posts.data">
                 {{post.title}}
             </li>
         </ul>

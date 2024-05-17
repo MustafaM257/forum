@@ -15,3 +15,5 @@ it('should pass posts to Posts/Index', function() {
             ->has('posts')
         );
 });
+
+

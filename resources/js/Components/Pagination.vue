@@ -1,10 +1,14 @@
 <template>
     <div class="flex items-center justify-between border-t border-gray-200 px-4 py-3 sm:px-6">
         <div class="flex flex-1 justify-between sm:hidden">
-            <Link v-if="previous" :href="previous" class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+            <Link v-if="previous" :href="previous" class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            :only="only"
+            >
                 Previous
             </Link>
-            <Link v-if="next" :href="next" class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+            <Link v-if="next" :href="next" class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            :only="only"
+            >
                 Next
             </Link>
         </div>
@@ -23,7 +27,9 @@
             <div>
                 <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
                     <Link
+
                         v-for="link in meta.links"
+                        :only="only"
                         :key="link.label"
                         preserve-scroll
                         :href="link.url"
@@ -41,7 +47,16 @@
 import { Link } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
-const props = defineProps(['meta']);
+const props = defineProps({
+    meta: {
+        type: Object,
+        required: true,
+    },
+    only : {
+        type: Array,
+        default: [],
+    }
+});
 const previous = computed(() => props.meta.links[0].url);
 const next = computed(() => props.meta.links[props.meta.links.length - 1].url);
 </script>

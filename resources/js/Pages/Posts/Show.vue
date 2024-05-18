@@ -17,7 +17,7 @@
                         </div>
                     </li>
                 </ul>
-                <Pagination :meta="comments.meta" />
+                <Pagination :meta="comments.meta" :only="['comments']" />
             </div>
         </Container>
 

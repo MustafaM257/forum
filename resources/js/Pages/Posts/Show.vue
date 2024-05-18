@@ -9,7 +9,7 @@
 
             </article>
             <div class="mt-12">
-                <form @submit.="addComment">
+                <form @submit.prevent="addComment">
                     <div>
                         <InputLabel for="body">Comment</InputLabel>
                         <TextInput id="body" v-model:="comment_form.body"/>
@@ -57,7 +57,9 @@ const comment_form = useForm({
 })
 
 const addComment = () => {
-    comment_form.post(route('posts.comments.store',props.post.id));
+    comment_form.post(route('posts.comments.store',props.post.id),{
+        preserveScroll: true,
+    });
 }
 
 </script>

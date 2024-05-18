@@ -37,7 +37,6 @@ class CommentController extends Controller
         $comment->user()->associate($request->user());
         $comment->post()->associate($post);
         $comment->save();
-        dd($comment);
     }
 
     /**

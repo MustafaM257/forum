@@ -11,11 +11,11 @@
             <div class="mt-12">
                 <form @submit.prevent="addComment">
                     <div>
-                        <InputLabel for="body">Comment</InputLabel>
-                        <TextInput id="body" v-model:="comment_form.body"/>
+                        <InputLabel for="body" class="sr-only">Comment</InputLabel>
+                        <TextArea id="body" rows="5"  v-model="comment_form.body" placeholder="Share your thoughts about this post"/>
                     </div>
 
-                    <PrimaryButton type="submit" class="mt-4">Add Comment</PrimaryButton>
+                    <PrimaryButton type="submit" class="mt-4" :disabled="comment_form.processing">Add Comment</PrimaryButton>
                 </form>
             </div>
             <div>
@@ -46,6 +46,7 @@ import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {useForm} from "@inertiajs/vue3";
+import TextArea from "@/Components/TextArea.vue";
 
 const props = defineProps(['post','comments']);
 console.log(props.comments);
@@ -59,6 +60,7 @@ const comment_form = useForm({
 const addComment = () => {
     comment_form.post(route('posts.comments.store',props.post.id),{
         preserveScroll: true,
+        onSuccess: () => comment_form.reset()
     });
 }
 

@@ -14,10 +14,15 @@
                                     </div>
                                     <p class="mt-0.5 text-sm text-gray-500">Commented by {{comment.user.name}} <span class="font-bold"> {{ dateFormat(comment.created_at)}} ago </span></p>
                                 </div>
-                                <div class="mt-2 text-sm text-gray-700">
+                                <div class="mt-2 text-sm text-gray-700 break-all">
                                     <p>{{ comment.body }}</p>
                                 </div>
                             </div>
+                        <div class="mt-4">
+                            <form @submit.prevent="deleteComment">
+                                <button>Delete</button>
+                            </form>
+                        </div>
                     </div>
 <!--                    End of Comment Data-->
 
@@ -25,9 +30,14 @@
 
 <script setup>
 import {formatDistance, parseISO} from "date-fns";
-
-defineProps(['comment'])
+import {router} from "@inertiajs/vue3"
+const props = defineProps(['comment'])
 const dateFormat = (str) => {
     return formatDistance(parseISO(str), new Date());
+}
+const deleteComment = () => {
+    router.delete(route('comments.destroy',props.comment.id), {
+        preserveScroll: true,
+    });
 }
 </script>

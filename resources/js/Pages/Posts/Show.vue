@@ -9,10 +9,11 @@
 
             </article>
             <div class="mt-12">
-                <form @submit.prevent="addComment">
+                <form @submit.prevent="addComment" v-if="$page.props.auth.user">
                     <div>
                         <InputLabel for="body" class="sr-only">Comment</InputLabel>
                         <TextArea id="body" rows="5"  v-model="comment_form.body" placeholder="Share your thoughts about this post"/>
+                        <InputError :message="comment_form.errors.body"  class="mt-2 text-center"/>
                     </div>
 
                     <PrimaryButton type="submit" class="mt-4" :disabled="comment_form.processing">Add Comment</PrimaryButton>
@@ -47,6 +48,7 @@ import TextInput from "@/Components/TextInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {useForm} from "@inertiajs/vue3";
 import TextArea from "@/Components/TextArea.vue";
+import InputError from "@/Components/InputError.vue";
 
 const props = defineProps(['post','comments']);
 console.log(props.comments);

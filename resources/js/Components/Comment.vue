@@ -19,7 +19,9 @@
                                 </div>
                             </div>
                         <div class="mt-4">
-                            <form @submit.prevent="deleteComment">
+                            <form
+                                v-if="isCommentOwner"
+                                @submit.prevent="deleteComment">
                                 <button>Delete</button>
                             </form>
                         </div>
@@ -30,7 +32,8 @@
 
 <script setup>
 import {formatDistance, parseISO} from "date-fns";
-import {router} from "@inertiajs/vue3"
+import {router, usePage} from "@inertiajs/vue3"
+import {computed} from "vue";
 const props = defineProps(['comment'])
 const dateFormat = (str) => {
     return formatDistance(parseISO(str), new Date());
@@ -40,4 +43,9 @@ const deleteComment = () => {
         preserveScroll: true,
     });
 }
+const isCommentOwner = computed(() => {
+    return props.comment.user.id === usePage().props.auth.user?.id;
+})
+console.log(isCommentOwner.value);
+
 </script>

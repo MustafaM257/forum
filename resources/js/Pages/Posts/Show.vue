@@ -1,27 +1,22 @@
 <template>
     <AppLayout :title="post.title">
         <Container>
-            <h1 class="text-2xl font-bold">{{ post.title }}</h1>
-            <span class="block mt-1 text-sm text-gray-600">{{ dateFormat(post.created_at) }} ago by {{ post.user.name }}</span>
 
             <article class="mt-6">
-                <pre class="whitespace-pre-wrap font-sans">{{ post.body }}</pre>
+                <h2 class="text-2xl md:text-4xl font-bold tracking-tight text-gray-900 ">{{post.title}}</h2>
+                <span class="block mt-1 text-base text-gray-600">{{ dateFormat(post.created_at) }} ago by {{ post.user.name }}</span>
+                <p class="mt-5 text-xl text-gray-500">{{post.body}}</p>
+
             </article>
-            <hr />
             <div>
-                <h1 class="text-5xl">Comments</h1>
-                <Comment />
-<!--                <ul class="space-y-10">-->
-<!--                    <div class="bg-black/50 h-1 w-full" />-->
-
-<!--                    <li v-for="comment in comments.data">-->
-<!--                        {{comment.body}} <code> By {{comment.user.name}}</code>-->
-<!--                        <br>-->
-<!--                        <p>{{dateFormat(comment.created_at)}} ago</p>-->
-<!--                        <div class="bg-black/50 h-1 w-full" />-->
-
-<!--                    </li>-->
-<!--                </ul>-->
+                <ul role="list" class="space-y-10 py-10">
+                    <li v-for="(comment, commentIdx) in comments.data" :key="commentIdx.id">
+                        <div class="relative pb-8">
+                            <span v-if="commentIdx !== comments.data.length - 1" class="absolute left-5 top-5 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true" />
+                            <Comment :comment="comment" />
+                        </div>
+                    </li>
+                </ul>
                 <Pagination :meta="comments.meta" />
             </div>
         </Container>
@@ -36,6 +31,7 @@ import {formatDistance, parseISO} from "date-fns";
 import Container from "@/Components/Container.vue";
 import Pagination from "@/Components/Pagination.vue";
 import Comment from "@/Components/Comment.vue";
+import {ChatBubbleLeftEllipsisIcon} from "@heroicons/vue/20/solid/index.js";
 
 const props = defineProps(['post','comments']);
 console.log(props.comments);

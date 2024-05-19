@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Post;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
+
 
 class CommentController extends Controller
 {
@@ -69,10 +71,7 @@ class CommentController extends Controller
     public function destroy(Request $request , Comment $comment)
     {
         //
-        if ($request->user()->id !== $comment->user_id)
-        {
-            abort(403);
-        }
+//        $this->authorize('delete', $comment);
         $comment->delete();
     }
 }

@@ -20,7 +20,7 @@
                             </div>
                         <div class="mt-4">
                             <form
-                                v-if="isCommentOwner"
+
                                 @submit.prevent="deleteComment">
                                 <button>Delete</button>
                             </form>
@@ -47,5 +47,5 @@ const isCommentOwner = computed(() => {
     return props.comment.user.id === usePage().props.auth.user?.id;
 })
 console.log(isCommentOwner.value);
-
+console.log("Comment user id", props.comment.user_id);
 </script>

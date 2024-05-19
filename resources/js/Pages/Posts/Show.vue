@@ -53,6 +53,7 @@ import TextArea from "@/Components/TextArea.vue";
 import InputError from "@/Components/InputError.vue";
 import {ref} from "vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
+import {useModal} from "@/Composables/useModal.js";
 const props = defineProps(['post','comments']);
 console.log(props.comments);
 const dateFormat = (str) => {
@@ -77,8 +78,9 @@ const updateComment = () => {
         onSuccess: cancelEditComment,
     })
 }
-
+const {useModalConfirmation} = useModal();
 const deleteComment = (commentId) => {
+    if (! useModalConfirmation('Are you sure want to delete this comment')) { return; };
     router.delete(route('comments.destroy',{
         comment: commentId,
         page: props.comments.meta.current_page,

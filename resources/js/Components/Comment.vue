@@ -20,7 +20,7 @@
                             </div>
                         <div class="mt-4">
                             <form
-
+                                v-if="comment.can?.delete"
                                 @submit.prevent="deleteComment">
                                 <button>Delete</button>
                             </form>
@@ -43,9 +43,8 @@ const deleteComment = () => {
         preserveScroll: true,
     });
 }
-const isCommentOwner = computed(() => {
-    return props.comment.user.id === usePage().props.auth.user?.id;
-})
-console.log(isCommentOwner.value);
-console.log("Comment user id", props.comment.user_id);
+// Refactor the isCommentOwner to be sent from backend, check CommentResource that used CommentPolicy to make that work, much better.
+// const isCommentOwner = computed(() => {
+//     return props.comment.user.id === usePage().props.auth.user?.id;
+// })
 </script>

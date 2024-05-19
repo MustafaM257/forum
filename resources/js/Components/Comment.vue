@@ -18,11 +18,16 @@
                                     <p>{{ comment.body }}</p>
                                 </div>
                             </div>
-                        <div class="mt-4">
+                        <div class="mt-4 space-y-4">
+                            <form
+                                v-if="comment.can?.update"
+                                @submit.prevent="$emit('edit',comment.id)">
+                                <button class="text-gray-600 font-mono text-sm bg-gray-200 py-2 px-3 hover:text-gray-800 hover:brightness-105 transition-all hover:font-semibold w-full">Edit</button>
+                            </form>
                             <form
                                 v-if="comment.can?.delete"
                                 @submit.prevent="$emit('delete',comment.id)">
-                                <button class="text-red-600 font-mono text-sm bg-red-200 py-2 px-3 hover:text-red-800 hover:brightness-105 transition-all hover:font-semibold">Delete</button>
+                                <button class="text-red-600 font-mono text-sm bg-red-200 py-2 px-3 hover:text-red-800 hover:brightness-105 transition-all hover:font-semibold w-full">Delete</button>
                             </form>
                         </div>
                     </div>
@@ -35,7 +40,7 @@ import {formatDistance, parseISO} from "date-fns";
 import {router, usePage} from "@inertiajs/vue3"
 import {computed} from "vue";
 const props = defineProps(['comment'])
-const emit = defineEmits(['delete']);
+const emit = defineEmits(['delete','edit']);
 const dateFormat = (str) => {
     return formatDistance(parseISO(str), new Date());
 }

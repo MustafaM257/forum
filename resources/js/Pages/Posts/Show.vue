@@ -9,22 +9,24 @@
 
             </article>
             <div class="mt-12">
-                <form @submit.prevent="addComment" v-if="$page.props.auth.user">
+                <form @submit.prevent=" () => commentIdBeingEdited ? updateComment() : addComment()" v-if="$page.props.auth.user">
                     <div>
                         <InputLabel for="body" class="sr-only">Comment</InputLabel>
-                        <TextArea id="body" rows="5"  v-model="comment_form.body" placeholder="Share your thoughts about this post"/>
+                        <TextArea ref="commentTextArea" id="body" rows="5"  v-model="comment_form.body" placeholder="Share your thoughts about this post"/>
                         <InputError :message="comment_form.errors.body"  class="mt-2 text-center"/>
                     </div>
 
-                    <PrimaryButton type="submit" class="mt-4" :disabled="comment_form.processing">Add Comment</PrimaryButton>
+                    <PrimaryButton type="submit" class="mt-4" :disabled="comment_form.processing"
+                    v-text="commentIdBeingEdited ? 'Update Comment' : 'Add Comment'"></PrimaryButton>
+                    <SecondaryButton @click="cancelEditComment" v-if="commentIdBeingEdited">Cancel</SecondaryButton>
                 </form>
             </div>
             <div>
                 <ul role="list" class="space-y-10 py-10">
-                    <li v-for="(comment, commentIdx) in comments.data" :key="commentIdx.id">
+                    <li v-for="(comment, commentIdx) in comments.data" :key="commentIdx">
                         <div class="relative pb-8">
                             <span v-if="commentIdx !== comments.data.length - 1" class="absolute left-5 top-5 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true" />
-                            <Comment @delete="deleteComment" :comment="comment" />
+                            <Comment @edit="editComment" @delete="deleteComment" :comment="comment" />
                         </div>
                     </li>
                 </ul>
@@ -49,7 +51,8 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {router, useForm} from "@inertiajs/vue3";
 import TextArea from "@/Components/TextArea.vue";
 import InputError from "@/Components/InputError.vue";
-
+import {ref} from "vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
 const props = defineProps(['post','comments']);
 console.log(props.comments);
 const dateFormat = (str) => {
@@ -58,12 +61,21 @@ const dateFormat = (str) => {
 const comment_form = useForm({
     body: '',
 })
-
+const commentTextArea = ref(null);
 const addComment = () => {
     comment_form.post(route('posts.comments.store',props.post.id),{
         preserveScroll: true,
         onSuccess: () => comment_form.reset()
     });
+}
+const updateComment = () => {
+    comment_form.put(route('comments.update', {
+        comment: commentIdBeingEdited.value,
+        page: props.comments.meta.current_page,
+    }), {
+        preserveScroll: true,
+        onSuccess: cancelEditComment,
+    })
 }
 
 const deleteComment = (commentId) => {
@@ -73,5 +85,17 @@ const deleteComment = (commentId) => {
     }),{
         preserveScroll: true,
     });
+}
+const commentIdBeingEdited = ref(null);
+const commentBeingEdited = computed(() => props.comments.data.find(comment => comment.id === commentIdBeingEdited.value));
+
+const editComment = (commentId) => {
+    commentIdBeingEdited.value = commentId;
+    comment_form.body = commentBeingEdited.value?.body || '';
+    commentTextArea.value?.focus();
+}
+const cancelEditComment = () => {
+    commentIdBeingEdited.value = null;
+    comment_form.reset();
 }
 </script>

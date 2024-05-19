@@ -21,8 +21,8 @@
                         <div class="mt-4">
                             <form
                                 v-if="comment.can?.delete"
-                                @submit.prevent="deleteComment">
-                                <button>Delete</button>
+                                @submit.prevent="$emit('delete',comment.id)">
+                                <button class="text-red-600 font-mono text-sm bg-red-200 py-2 px-3 hover:text-red-800 hover:brightness-105 transition-all hover:font-semibold">Delete</button>
                             </form>
                         </div>
                     </div>
@@ -35,14 +35,11 @@ import {formatDistance, parseISO} from "date-fns";
 import {router, usePage} from "@inertiajs/vue3"
 import {computed} from "vue";
 const props = defineProps(['comment'])
+const emit = defineEmits(['delete']);
 const dateFormat = (str) => {
     return formatDistance(parseISO(str), new Date());
 }
-const deleteComment = () => {
-    router.delete(route('comments.destroy',props.comment.id), {
-        preserveScroll: true,
-    });
-}
+
 // Refactor the isCommentOwner to be sent from backend, check CommentResource that used CommentPolicy to make that work, much better.
 // const isCommentOwner = computed(() => {
 //     return props.comment.user.id === usePage().props.auth.user?.id;

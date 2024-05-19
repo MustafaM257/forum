@@ -24,7 +24,7 @@
                     <li v-for="(comment, commentIdx) in comments.data" :key="commentIdx.id">
                         <div class="relative pb-8">
                             <span v-if="commentIdx !== comments.data.length - 1" class="absolute left-5 top-5 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true" />
-                            <Comment :comment="comment" />
+                            <Comment @delete="deleteComment" :comment="comment" />
                         </div>
                     </li>
                 </ul>
@@ -46,7 +46,7 @@ import {ChatBubbleLeftEllipsisIcon} from "@heroicons/vue/20/solid/index.js";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import {useForm} from "@inertiajs/vue3";
+import {router, useForm} from "@inertiajs/vue3";
 import TextArea from "@/Components/TextArea.vue";
 import InputError from "@/Components/InputError.vue";
 
@@ -66,4 +66,12 @@ const addComment = () => {
     });
 }
 
+const deleteComment = (commentId) => {
+    router.delete(route('comments.destroy',{
+        comment: commentId,
+        page: props.comments.meta.current_page,
+    }),{
+        preserveScroll: true,
+    });
+}
 </script>

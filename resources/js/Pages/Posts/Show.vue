@@ -55,7 +55,8 @@ import {ref} from "vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import {useModal} from "@/Composables/useModal.js";
 const props = defineProps(['post','comments']);
-console.log(props.comments);
+const {useModalConfirmation} = useModal();
+
 const dateFormat = (str) => {
     return formatDistance(parseISO(str), new Date());
 }
@@ -63,13 +64,19 @@ const comment_form = useForm({
     body: '',
 })
 const commentTextArea = ref(null);
+
 const addComment = () => {
     comment_form.post(route('posts.comments.store',props.post.id),{
         preserveScroll: true,
         onSuccess: () => comment_form.reset()
     });
 }
-const updateComment = () => {
+const updateComment = async () => {
+    if (!await useModalConfirmation('Are you sure want to update this comment ?')) {
+        // ********* DOuble check tomorrow why not focusing
+        commentTextArea.value?.focus();
+        return;
+    }
     comment_form.put(route('comments.update', {
         comment: commentIdBeingEdited.value,
         page: props.comments.meta.current_page,
@@ -78,9 +85,8 @@ const updateComment = () => {
         onSuccess: cancelEditComment,
     })
 }
-const {useModalConfirmation} = useModal();
-const deleteComment = (commentId) => {
-    if (! useModalConfirmation('Are you sure want to delete this comment')) { return; };
+const deleteComment = async (commentId) => {
+    if (! await useModalConfirmation('Are you sure want to delete this comment')) { return; }
     router.delete(route('comments.destroy',{
         comment: commentId,
         page: props.comments.meta.current_page,

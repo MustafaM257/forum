@@ -24,6 +24,10 @@ class CommentController extends Controller
         $comment->user()->associate($request->user());
         $comment->post()->associate($post);
         $comment->save();
+        return to_route('posts.show',$post)->with('flash', [
+            'bannerStyle' => 'success',
+            'banner' => 'Comment added successfully!',
+        ]);
     }
 
 
@@ -40,7 +44,10 @@ class CommentController extends Controller
         return to_route('posts.show',[
             'post' =>$comment->post_id,
             'page' => $request->query('page'),
-        ]);
+        ])->with('flash', [
+            'bannerStyle' => 'success',
+            'banner' => 'Comment updated successfully!',
+        ]);;;
     }
 
     /**
@@ -54,6 +61,9 @@ class CommentController extends Controller
         return to_route('posts.show',[
             'post' => $comment->post_id,
             'page' => $request->query('page'),
-        ]);
+        ])->with('flash', [
+        'bannerStyle' => 'success',
+        'banner' => 'Comment deleted successfully!',
+    ]);;
     }
 }

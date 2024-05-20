@@ -30,6 +30,7 @@ export function useModal() {
             if (globalState.resolver) {
                 globalState.resolver(true);
             }
+            resetModal();
         },
         cancel: () => {
             if (globalState.resolver) {

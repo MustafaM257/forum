@@ -20,12 +20,12 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import {nextTick, ref, watchEffect} from "vue";
 const {state , confirm , cancel} = useModal();
 const cancelBtn = ref(null);
-watchEffect(async()=> {
-    if(state.show) {
+watchEffect(async () => {
+    if (state.show) {
         await nextTick();
         // To keep focus on the cancel button when the modal opens
-        cancelBtn.value?.$el.focus();
+        cancelBtn.value?.$el?.focus();
     }
-})
+});
 
 </script>

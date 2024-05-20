@@ -5,7 +5,7 @@
             <article class="mt-6">
                 <h2 class="text-2xl md:text-4xl font-bold tracking-tight text-gray-900 ">{{post.title}}</h2>
                 <span class="block mt-1 text-base text-gray-600">{{ dateFormat(post.created_at) }} ago by {{ post.user.name }}</span>
-                <p class="mt-5 text-xl text-gray-500">{{post.body}}</p>
+                <p class="mt-5 text-xl text-gray-500 break-all">{{post.body}}</p>
 
             </article>
             <div class="mt-12">

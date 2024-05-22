@@ -39,6 +39,12 @@ const menu = [
         url: route('posts.index'),
         route: 'posts.index',
         show: true, // Always show regardless if authenticated or not
+    },
+    {
+        name: " Create Post",
+        url: route('posts.create'),
+        route: 'posts.create',
+        show: () => usePage().props.auth.user
     }
 ]
 </script>

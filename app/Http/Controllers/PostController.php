@@ -43,7 +43,7 @@ class PostController extends Controller
         ]);
         $post = Post::make($post_data);
         $post->user()->associate($request->user())->save();
-        return to_route('posts.show',$post);
+        return redirect($post->showRoute());
     }
 
     /**

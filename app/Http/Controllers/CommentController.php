@@ -24,7 +24,7 @@ class CommentController extends Controller
         $comment->user()->associate($request->user());
         $comment->post()->associate($post);
         $comment->save();
-        return to_route('posts.show',$post)->with('flash', [
+        return redirect($post->showRoute())->with('flash', [
             'bannerStyle' => 'success',
             'banner' => 'Comment added successfully!',
         ]);
@@ -45,10 +45,8 @@ class CommentController extends Controller
             'body'=>['required','string','min:1','max:500'],
         ]);
         $comment->update($data);
-        return to_route('posts.show',[
-            'post' =>$comment->post_id,
-            'page' => $request->query('page'),
-        ])->with('flash', [
+
+        return redirect($comment->post->showRoute(['page' => $request->query('page')]))->with('flash', [
             'bannerStyle' => 'success',
             'banner' => 'Comment updated successfully!',
         ]);;;
@@ -65,10 +63,8 @@ class CommentController extends Controller
         //
 //        $this->authorize('delete', $comment);
         $comment->delete();
-        return to_route('posts.show',[
-            'post' => $comment->post_id,
-            'page' => $request->query('page'),
-        ])->with('flash', [
+        return
+            redirect($comment->post->showRoute(['page' => $request->query('page')]))->with('flash', [
         'bannerStyle' => 'success',
         'banner' => 'Comment deleted successfully!',
     ]);

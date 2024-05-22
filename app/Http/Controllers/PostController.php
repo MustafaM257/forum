@@ -6,6 +6,7 @@ use App\Http\Resources\CommentResource;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class PostController extends Controller
@@ -48,9 +49,13 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(Request $request, Post $post)
     {
-        //
+        // manage to redirect if url of slug changes of mistyped
+        if (! Str::contains($post->showRoute(),$request->path()))
+        {
+            return redirect($post->showRoute($request->query()));
+        }
         $post->load('user');
         return Inertia::render('Posts/Show', [
             'post' => PostResource::make($post),

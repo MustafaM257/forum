@@ -36,6 +36,10 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
+
+        if ($request->user()->cannot('update', $comment)) {
+            abort(403);
+        }
         //
         $data = $request->validate([
             'body'=>['required','string','min:1','max:500'],
@@ -55,6 +59,9 @@ class CommentController extends Controller
      */
     public function destroy(Request $request , Comment $comment)
     {
+        if ($request->user()->cannot('delete', $comment)) {
+            abort(403);
+        }
         //
 //        $this->authorize('delete', $comment);
         $comment->delete();
@@ -64,6 +71,6 @@ class CommentController extends Controller
         ])->with('flash', [
         'bannerStyle' => 'success',
         'banner' => 'Comment deleted successfully!',
-    ]);;
+    ]);
     }
 }

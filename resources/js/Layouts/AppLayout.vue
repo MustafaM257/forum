@@ -32,7 +32,7 @@ const menu = [
         name: 'Dashboard',
         url: route('dashboard'),
         route: 'dashboard',
-        show: () => usePage().props.auth.user
+        show:  usePage().props.auth.user
     },
     {
         name: 'Posts',
@@ -44,9 +44,10 @@ const menu = [
         name: " Create Post",
         url: route('posts.create'),
         route: 'posts.create',
-        show: () => usePage().props.auth.user
+        show:  usePage().props.permissions.create_posts,
     }
 ]
+console.log(usePage().props.permissions.create_posts)
 </script>
 
 <template>

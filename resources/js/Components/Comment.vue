@@ -14,8 +14,7 @@
                                     </div>
                                     <p class="mt-0.5 text-sm text-gray-500">Commented by {{comment.user.name}} <span class="font-bold"> {{ dateFormat(comment.created_at)}} ago </span></p>
                                 </div>
-                                <div class="mt-2 text-sm text-gray-700 break-all">
-                                    <p>{{ comment.body }}</p>
+                                <div class="mt-2 text-sm text-gray-700 break-all prose prose-sm max-w-none  " v-html="comment.html">
                                 </div>
                             </div>
                         <div class="mt-4 space-y-4">

@@ -10,7 +10,7 @@
                 <form @submit.prevent=" () => commentIdBeingEdited ? updateComment() : addComment()" v-if="$page.props.auth.user">
                     <div>
                         <InputLabel for="body" class="sr-only">Comment</InputLabel>
-                        <TextArea ref="commentTextArea" id="body" rows="5"  v-model="comment_form.body" placeholder="Share your thoughts about this post"/>
+                        <MarkdownEditor ref="commentTextArea" id="body"   v-model="comment_form.body"  editorClass="min-h-[150px]"/>
                         <InputError :message="comment_form.errors.body"  class="mt-2 text-center"/>
                     </div>
 
@@ -52,6 +52,7 @@ import InputError from "@/Components/InputError.vue";
 import {ref} from "vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import {useModal} from "@/Composables/useModal.js";
+import MarkdownEditor from "@/Components/MarkdownEditor.vue";
 const props = defineProps(['post','comments']);
 const {useModalConfirmation} = useModal();
 

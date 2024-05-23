@@ -133,6 +133,9 @@ const props = defineProps({
     modelValue: {
         default: '',
     },
+    editorClass: {
+        default: '',
+    }
 });
 const emit = defineEmits(['update:modelValue']);
 
@@ -152,7 +155,7 @@ const editor = useEditor({
     },
     editorProps: {
         attributes: {
-            class: 'h-96 prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none py-1.5 px-3 text-black',
+            class: `   prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none py-1.5 px-3 text-black  ${props.editorClass}`,
         },
     }
 });

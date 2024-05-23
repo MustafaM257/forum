@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(Post::class)->constrained()->cascadeOnDelete();
 
             $table->longText('body');
-            $table->longText('html');
+            $table->longText('html')->nullable();
             $table->timestamps();
         });
     }

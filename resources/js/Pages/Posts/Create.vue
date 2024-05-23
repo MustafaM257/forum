@@ -11,8 +11,8 @@
                     </div>
                     <div>
                         <InputLabel for="body" class="sr-only">Title</InputLabel>
-                        <MarkdownEditor v-model="form.body" />
-                        <TextArea id="body" class="w-full"  v-model="form.body" rows="20"/>
+                        <MarkdownEditor v-model="form.body" editor-class="h-96" />
+<!--                        <TextArea id="body" class="w-full"  v-model="form.body" rows="20"/>-->
                         <InputError :message="form.errors.body" class="mt-1" />
                     </div>
                     <div>

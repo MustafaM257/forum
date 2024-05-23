@@ -52,7 +52,7 @@ class PostController extends Controller
     public function show(Request $request, Post $post)
     {
         // manage to redirect if url of slug changes of mistyped
-        if (! Str::contains($post->showRoute(),$request->path()))
+        if (! Str::endsWith($post->showRoute(),$request->path()))
         {
             return redirect($post->showRoute($request->query()));
         }

@@ -160,6 +160,10 @@ const editor = useEditor({
     }
 });
 
+defineExpose({
+    focus: () => editor.value.commands.focus()
+})
+
 // Watch for changes in modelValue and update editor content
 watch(
     () => props.modelValue,

@@ -28,7 +28,7 @@
                         </div>
                     </li>
                 </ul>
-                <Pagination :meta="comments.meta" :only="['comments']" />
+                <Pagination :meta="comments.meta" :only="['comments','jetstream']" />
             </div>
         </Container>
 
@@ -72,8 +72,8 @@ const addComment = () => {
 }
 const updateComment = async () => {
     if (!await useModalConfirmation('Are you sure want to update this comment ?')) {
-        // ********* DOuble check tomorrow why not focusing
-        commentTextArea.value?.focus();
+        // ********* double check tomorrow why not focusing
+        commentTextArea.value?.focus()
         return;
     }
     comment_form.put(route('comments.update', {

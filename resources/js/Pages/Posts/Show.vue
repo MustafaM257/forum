@@ -2,11 +2,9 @@
     <AppLayout :title="post.title">
         <Container>
 
-            <article class="mt-6">
-                <h2 class="text-2xl md:text-4xl font-bold tracking-tight text-gray-900 ">{{post.title}}</h2>
-                <span class="block mt-1 text-base text-gray-600">{{ dateFormat(post.created_at) }} ago by {{ post.user.name }}</span>
-                <p class="mt-5 text-xl text-gray-500 break-all">{{post.body}}</p>
-
+            <h2 class="text-2xl md:text-4xl font-bold tracking-tight text-gray-900 ">{{post.title}}</h2>
+            <span class="block mt-1 text-base text-gray-600">{{ dateFormat(post.created_at) }} ago by {{ post.user.name }}</span>
+            <article class="mt-6 prose prose-sm max-w-none" v-html="post.html">
             </article>
             <div class="mt-12">
                 <form @submit.prevent=" () => commentIdBeingEdited ? updateComment() : addComment()" v-if="$page.props.auth.user">

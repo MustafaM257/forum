@@ -1,66 +1,141 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Forum Website Documentation
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Introduction
 
-## About Laravel
+This documentation provides a comprehensive overview of a forum website built using Laravel 11, Vue 3, and Inertia.js. The application allows users to create posts and comments with rich text and markdown support. Authentication is handled via Jetstream's starter kit, ensuring secure and efficient user management.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Table of Contents
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. [Installation](#installation)
+2. [Configuration](#configuration)
+3. [Features](#features)
+4. [Architecture](#architecture)
+5. [Resources and Policies](#resources-and-policies)
+6. [Usage](#usage)
+7. [Contributing](#contributing)
+8. [License](#license)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Installation
 
-## Learning Laravel
+### Prerequisites
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- PHP 8.1+
+- Composer
+- Node.js and NPM
+- MySQL or PostgreSQL
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Steps
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. **Clone the repository:**
+    ```sh
+    git clone git@github.com:MustafaM257/forum.git
+    cd forum
+    ```
 
-## Laravel Sponsors
+2. **Install dependencies:**
+    ```sh
+    composer install
+    npm install
+    npm run dev
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+3. **Set up environment file:**
+    ```sh
+    cp .env.example .env
+    ```
 
-### Premium Partners
+4. **Configure database in `.env` file:**
+    ```env
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=your_database
+    DB_USERNAME=your_username
+    DB_PASSWORD=your_password
+    ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+5. **Run migrations and seeders:**
+    ```sh
+    php artisan migrate --seed
+    ```
+
+6. **Serve the application:**
+    ```sh
+    php artisan serve
+    ```
+
+## Configuration
+
+Ensure to configure other services and settings in the `.env` file according to your requirements, such as mail services, broadcasting, and cache drivers.
+
+## Features
+
+- **User Authentication:** Managed by Laravel Jetstream.
+- **Posts and Comments:** Users can create posts and comments with rich text and markdown.
+- **Real-time Updates:** Utilizing Inertia.js for smooth single-page application behavior.
+- **Resourceful Routes:** CRUD operations for posts and comments.
+- **Rich Text Editing:** Integrated rich text and markdown support for posts and comments.
+
+## Architecture
+
+The application follows a clean architecture approach, emphasizing separation of concerns and modularity.
+
+### Folders Structure
+
+- `app/Models`: Eloquent models.
+- `app/Http/Controllers`: Controllers handling HTTP requests.
+- `app/Providers`: manage data to be provided to frontend
+- `app/Policies`: Authorization policies.
+- `resources/js`: Vue 3 components and Inertia pages.
+- `resources/views`: Blade templates for initial HTML.
+
+## Resources and Policies
+
+### Resources
+
+Resources are used to transform models into JSON responses, ensuring a clear separation between the model data and the JSON structure exposed to the API.
+
+- `app/Http/Resources/PostResource.php`
+- `app/Http/Resources/CommentResource.php`
+- `app/Http/Resources/UserResource.php`
+### Policies
+
+Policies manage the authorization logic for different actions within the application. Ensure policies are registered in the `AuthServiceProvider`.
+
+- `app/Policies/PostPolicy.php`
+- `app/Policies/CommentPolicy.php`
+
+
+## Usage
+
+### Authentication
+
+- **Register**: Users can register via the registration form.
+- **Login**: Registered users can log in to access their account.
+- **Password Reset**: Users can reset their passwords via email.
+
+### Posts and Comments
+
+- **Create Post**: Authenticated users can create new posts.
+- **Edit/Delete Post**: Users can edit or delete their own posts.
+- **Comment on Post**: Authenticated users can comment on posts.
+- **Edit/Delete Comment**: Users can edit or delete their own comments.
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+We welcome contributions! Please fork the repository and submit pull requests.
 
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes.
+4. Commit your changes (`git commit -m 'Add new feature'`).
+5. Push to the branch (`git push origin feature-branch`).
+6. Open a pull request.
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-source and licensed under the MIT License. For more information, see the [LICENSE](LICENSE) file.
+
+---
+
+Feel free to customize this documentation to better fit the specifics of your project.
